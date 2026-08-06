@@ -1,0 +1,772 @@
+{
+  "briefing": {
+    "key_observations": [
+      "Bench Press volume rose 1100 -> 1200 (+9%) with top weight 110 -> 120.",
+      "Curl missed the prescribed range last time: 8 reps at top weight 30.",
+      "Hanging Leg Raise is bodyweight; reps rose 12 -> 14."
+    ],
+    "limitations": [
+      "Leg Extension history logs one set expanded to the prescribed count, so per-set detail is inferred.",
+      "If any pain comes up during warm-ups, stop and consult a professional."
+    ],
+    "previous_workout_summary": "W3U1: 6 exercises, 7 working sets, 78 total reps. Bench Press moved up again (volume 1100 -> 1200), while Curl fell off (volume 360 -> 240).",
+    "readiness_questions_asked": [
+      "How sore are your shoulders and chest after the last upper session?",
+      "Did you sleep at least 7 hours last night?"
+    ],
+    "recommendations": [
+      {
+        "action": "Target the top of the 8-10 range; continue the planned progression.",
+        "area": "Bench Press",
+        "category": "push",
+        "confidence": "high",
+        "evidence": "volume_load 1100 -> 1200 (+9%), top weight 110 -> 120",
+        "needs_confirmation": false
+      },
+      {
+        "action": "Repeat the same working weight and stay in the middle of the range.",
+        "area": "Cable Row (Heavy)",
+        "category": "maintain",
+        "confidence": "medium",
+        "evidence": "top weight 80 for 10 reps in each of the last 3 sessions",
+        "needs_confirmation": false
+      },
+      {
+        "action": "Start at the bottom of the 10-12 range and avoid adding load.",
+        "area": "Curl",
+        "category": "pull_back",
+        "confidence": "medium",
+        "evidence": "reps at top weight fell 12 -> 8; volume_load 360 -> 240",
+        "needs_confirmation": true
+      },
+      {
+        "action": "Confirm the plan for this new exercise before loading up.",
+        "area": "New Movement",
+        "category": "ask_for_context",
+        "confidence": "low",
+        "evidence": "0 completed appearances in the log",
+        "needs_confirmation": true
+      }
+    ],
+    "tip": "Drive your feet into the floor on presses for a more stable base.",
+    "todays_workout": "W4U1 - upper session, 7 exercises including the Cable Row (Heavy) / Lat Pulldown superset and a new movement."
+  },
+  "interactive": true,
+  "latest_day": "W3U1",
+  "model": "fixture",
+  "postvalidate_warnings": [],
+  "readiness": [
+    {
+      "answer": "all good",
+      "question": "How sore are your shoulders and chest after the last upper session?"
+    },
+    {
+      "answer": "all good",
+      "question": "Did you sleep at least 7 hours last night?"
+    }
+  ],
+  "schema_version": 1,
+  "simulated": true,
+  "tool_payloads": {
+    "data_quality_signals": [
+      {
+        "detail": "3 historical rows for today's exercises logged one set shorthand-expanded to the prescribed count; per-set detail is inferred",
+        "kind": "inferred_sets"
+      },
+      {
+        "detail": "weight is 0 (bodyweight) so volume load is uninformative; progress is judged on reps",
+        "exercises": [
+          "Hanging Leg Raise"
+        ],
+        "kind": "bodyweight_exercises"
+      }
+    ],
+    "exercise_histories": {
+      "Bench Press": {
+        "appearances": [
+          {
+            "date": "2025-03-17",
+            "day": "W1U1",
+            "exercise_name": "Bench Press",
+            "has_dropset": false,
+            "n_working_sets": 1,
+            "note": null,
+            "parse_status": "ok",
+            "reps_at_top": 10,
+            "reps_total": 10,
+            "sets_inferred": false,
+            "superset": null,
+            "volume_load": 1000.0,
+            "weight_changed": false,
+            "weight_top": 100.0
+          },
+          {
+            "date": "2025-03-18",
+            "day": "W2U1",
+            "exercise_name": "Bench Press",
+            "has_dropset": false,
+            "n_working_sets": 1,
+            "note": null,
+            "parse_status": "ok",
+            "reps_at_top": 10,
+            "reps_total": 10,
+            "sets_inferred": false,
+            "superset": null,
+            "volume_load": 1100.0,
+            "weight_changed": false,
+            "weight_top": 110.0
+          },
+          {
+            "date": "2025-03-20",
+            "day": "W3U1",
+            "exercise_name": "Bench Press",
+            "has_dropset": false,
+            "n_working_sets": 1,
+            "note": null,
+            "parse_status": "ok",
+            "reps_at_top": 10,
+            "reps_total": 10,
+            "sets_inferred": false,
+            "superset": null,
+            "volume_load": 1200.0,
+            "weight_changed": false,
+            "weight_top": 120.0
+          }
+        ],
+        "deltas": {
+          "reps_at_top": 0.0,
+          "reps_total": 0.0,
+          "volume_load": 100.0,
+          "weight_top": 10.0
+        },
+        "exercise_name": "Bench Press",
+        "is_bodyweight": false,
+        "n_appearances": 3,
+        "trend": "improving",
+        "trend_metric": "volume_load"
+      },
+      "Cable Row (Heavy)": {
+        "appearances": [
+          {
+            "date": "2025-03-17",
+            "day": "W1U1",
+            "exercise_name": "Cable Row (Heavy)",
+            "has_dropset": false,
+            "n_working_sets": 1,
+            "note": null,
+            "parse_status": "ok",
+            "reps_at_top": 10,
+            "reps_total": 10,
+            "sets_inferred": false,
+            "superset": "A1",
+            "volume_load": 800.0,
+            "weight_changed": false,
+            "weight_top": 80.0
+          },
+          {
+            "date": "2025-03-18",
+            "day": "W2U1",
+            "exercise_name": "Cable Row (Heavy)",
+            "has_dropset": false,
+            "n_working_sets": 1,
+            "note": null,
+            "parse_status": "ok",
+            "reps_at_top": 10,
+            "reps_total": 10,
+            "sets_inferred": false,
+            "superset": "A1",
+            "volume_load": 800.0,
+            "weight_changed": false,
+            "weight_top": 80.0
+          },
+          {
+            "date": "2025-03-20",
+            "day": "W3U1",
+            "exercise_name": "Cable Row (Heavy)",
+            "has_dropset": false,
+            "n_working_sets": 1,
+            "note": null,
+            "parse_status": "ok",
+            "reps_at_top": 10,
+            "reps_total": 10,
+            "sets_inferred": false,
+            "superset": "A1",
+            "volume_load": 800.0,
+            "weight_changed": false,
+            "weight_top": 80.0
+          }
+        ],
+        "deltas": {
+          "reps_at_top": 0.0,
+          "reps_total": 0.0,
+          "volume_load": 0.0,
+          "weight_top": 0.0
+        },
+        "exercise_name": "Cable Row (Heavy)",
+        "is_bodyweight": false,
+        "n_appearances": 3,
+        "trend": "stable",
+        "trend_metric": "volume_load"
+      },
+      "Curl": {
+        "appearances": [
+          {
+            "date": "2025-03-17",
+            "day": "W1U1",
+            "exercise_name": "Curl",
+            "has_dropset": false,
+            "n_working_sets": 1,
+            "note": null,
+            "parse_status": "ok",
+            "reps_at_top": 12,
+            "reps_total": 12,
+            "sets_inferred": false,
+            "superset": null,
+            "volume_load": 420.0,
+            "weight_changed": false,
+            "weight_top": 35.0
+          },
+          {
+            "date": "2025-03-18",
+            "day": "W2U1",
+            "exercise_name": "Curl",
+            "has_dropset": false,
+            "n_working_sets": 1,
+            "note": null,
+            "parse_status": "ok",
+            "reps_at_top": 12,
+            "reps_total": 12,
+            "sets_inferred": false,
+            "superset": null,
+            "volume_load": 360.0,
+            "weight_changed": false,
+            "weight_top": 30.0
+          },
+          {
+            "date": "2025-03-20",
+            "day": "W3U1",
+            "exercise_name": "Curl",
+            "has_dropset": false,
+            "n_working_sets": 1,
+            "note": null,
+            "parse_status": "ok",
+            "reps_at_top": 8,
+            "reps_total": 8,
+            "sets_inferred": false,
+            "superset": null,
+            "volume_load": 240.0,
+            "weight_changed": false,
+            "weight_top": 30.0
+          }
+        ],
+        "deltas": {
+          "reps_at_top": -4.0,
+          "reps_total": -4.0,
+          "volume_load": -120.0,
+          "weight_top": 0.0
+        },
+        "exercise_name": "Curl",
+        "is_bodyweight": false,
+        "n_appearances": 3,
+        "trend": "declining",
+        "trend_metric": "volume_load"
+      },
+      "Hanging Leg Raise": {
+        "appearances": [
+          {
+            "date": "2025-03-17",
+            "day": "W1U1",
+            "exercise_name": "Hanging Leg Raise",
+            "has_dropset": false,
+            "n_working_sets": 1,
+            "note": null,
+            "parse_status": "ok",
+            "reps_at_top": 10,
+            "reps_total": 10,
+            "sets_inferred": false,
+            "superset": null,
+            "volume_load": 0.0,
+            "weight_changed": false,
+            "weight_top": 0.0
+          },
+          {
+            "date": "2025-03-18",
+            "day": "W2U1",
+            "exercise_name": "Hanging Leg Raise",
+            "has_dropset": false,
+            "n_working_sets": 1,
+            "note": null,
+            "parse_status": "ok",
+            "reps_at_top": 12,
+            "reps_total": 12,
+            "sets_inferred": false,
+            "superset": null,
+            "volume_load": 0.0,
+            "weight_changed": false,
+            "weight_top": 0.0
+          },
+          {
+            "date": "2025-03-20",
+            "day": "W3U1",
+            "exercise_name": "Hanging Leg Raise",
+            "has_dropset": false,
+            "n_working_sets": 1,
+            "note": null,
+            "parse_status": "ok",
+            "reps_at_top": 14,
+            "reps_total": 14,
+            "sets_inferred": false,
+            "superset": null,
+            "volume_load": 0.0,
+            "weight_changed": false,
+            "weight_top": 0.0
+          }
+        ],
+        "deltas": {
+          "reps_at_top": 2.0,
+          "reps_total": 2.0,
+          "volume_load": 0.0,
+          "weight_top": 0.0
+        },
+        "exercise_name": "Hanging Leg Raise",
+        "is_bodyweight": true,
+        "n_appearances": 3,
+        "trend": "improving",
+        "trend_metric": "reps_total"
+      },
+      "Lat Pulldown": {
+        "appearances": [
+          {
+            "date": "2025-03-17",
+            "day": "W1U1",
+            "exercise_name": "Lat Pulldown",
+            "has_dropset": false,
+            "n_working_sets": 1,
+            "note": null,
+            "parse_status": "ok",
+            "reps_at_top": 12,
+            "reps_total": 12,
+            "sets_inferred": false,
+            "superset": "A2",
+            "volume_load": 720.0,
+            "weight_changed": false,
+            "weight_top": 60.0
+          },
+          {
+            "date": "2025-03-18",
+            "day": "W2U1",
+            "exercise_name": "Lat Pulldown",
+            "has_dropset": false,
+            "n_working_sets": 1,
+            "note": null,
+            "parse_status": "ok",
+            "reps_at_top": 12,
+            "reps_total": 12,
+            "sets_inferred": false,
+            "superset": "A2",
+            "volume_load": 720.0,
+            "weight_changed": false,
+            "weight_top": 60.0
+          },
+          {
+            "date": "2025-03-20",
+            "day": "W3U1",
+            "exercise_name": "Lat Pulldown",
+            "has_dropset": false,
+            "n_working_sets": 1,
+            "note": null,
+            "parse_status": "ok",
+            "reps_at_top": 12,
+            "reps_total": 12,
+            "sets_inferred": false,
+            "superset": "A2",
+            "volume_load": 720.0,
+            "weight_changed": false,
+            "weight_top": 60.0
+          }
+        ],
+        "deltas": {
+          "reps_at_top": 0.0,
+          "reps_total": 0.0,
+          "volume_load": 0.0,
+          "weight_top": 0.0
+        },
+        "exercise_name": "Lat Pulldown",
+        "is_bodyweight": false,
+        "n_appearances": 3,
+        "trend": "stable",
+        "trend_metric": "volume_load"
+      },
+      "Leg Extension": {
+        "appearances": [
+          {
+            "date": "2025-03-17",
+            "day": "W1U1",
+            "exercise_name": "Leg Extension",
+            "has_dropset": true,
+            "n_working_sets": 2,
+            "note": null,
+            "parse_status": "ok",
+            "reps_at_top": 12,
+            "reps_total": 24,
+            "sets_inferred": true,
+            "superset": null,
+            "volume_load": 2160.0,
+            "weight_changed": false,
+            "weight_top": 90.0
+          },
+          {
+            "date": "2025-03-18",
+            "day": "W2U1",
+            "exercise_name": "Leg Extension",
+            "has_dropset": true,
+            "n_working_sets": 2,
+            "note": null,
+            "parse_status": "ok",
+            "reps_at_top": 12,
+            "reps_total": 24,
+            "sets_inferred": true,
+            "superset": null,
+            "volume_load": 2160.0,
+            "weight_changed": false,
+            "weight_top": 90.0
+          },
+          {
+            "date": "2025-03-20",
+            "day": "W3U1",
+            "exercise_name": "Leg Extension",
+            "has_dropset": true,
+            "n_working_sets": 2,
+            "note": null,
+            "parse_status": "ok",
+            "reps_at_top": 12,
+            "reps_total": 24,
+            "sets_inferred": true,
+            "superset": null,
+            "volume_load": 2160.0,
+            "weight_changed": false,
+            "weight_top": 90.0
+          }
+        ],
+        "deltas": {
+          "reps_at_top": 0.0,
+          "reps_total": 0.0,
+          "volume_load": 0.0,
+          "weight_top": 0.0
+        },
+        "exercise_name": "Leg Extension",
+        "is_bodyweight": false,
+        "n_appearances": 3,
+        "trend": "stable",
+        "trend_metric": "volume_load"
+      },
+      "New Movement": {
+        "appearances": [],
+        "deltas": null,
+        "exercise_name": "New Movement",
+        "is_bodyweight": false,
+        "n_appearances": 0,
+        "trend": "new",
+        "trend_metric": "volume_load"
+      }
+    },
+    "latest_day": "W3U1",
+    "previous_workout": {
+      "date": "2025-03-20",
+      "day": "W3U1",
+      "exercises": [
+        {
+          "exercise_name": "Bench Press",
+          "has_dropset": false,
+          "n_working_sets": 1,
+          "note": null,
+          "reps_at_top": 10,
+          "reps_total": 10,
+          "sets_inferred": false,
+          "superset": null,
+          "volume_load": 1200.0,
+          "weight_changed": false,
+          "weight_top": 120.0
+        },
+        {
+          "exercise_name": "Cable Row (Heavy)",
+          "has_dropset": false,
+          "n_working_sets": 1,
+          "note": null,
+          "reps_at_top": 10,
+          "reps_total": 10,
+          "sets_inferred": false,
+          "superset": "A1",
+          "volume_load": 800.0,
+          "weight_changed": false,
+          "weight_top": 80.0
+        },
+        {
+          "exercise_name": "Lat Pulldown",
+          "has_dropset": false,
+          "n_working_sets": 1,
+          "note": null,
+          "reps_at_top": 12,
+          "reps_total": 12,
+          "sets_inferred": false,
+          "superset": "A2",
+          "volume_load": 720.0,
+          "weight_changed": false,
+          "weight_top": 60.0
+        },
+        {
+          "exercise_name": "Leg Extension",
+          "has_dropset": true,
+          "n_working_sets": 2,
+          "note": null,
+          "reps_at_top": 12,
+          "reps_total": 24,
+          "sets_inferred": true,
+          "superset": null,
+          "volume_load": 2160.0,
+          "weight_changed": false,
+          "weight_top": 90.0
+        },
+        {
+          "exercise_name": "Hanging Leg Raise",
+          "has_dropset": false,
+          "n_working_sets": 1,
+          "note": null,
+          "reps_at_top": 14,
+          "reps_total": 14,
+          "sets_inferred": false,
+          "superset": null,
+          "volume_load": 0.0,
+          "weight_changed": false,
+          "weight_top": 0.0
+        },
+        {
+          "exercise_name": "Curl",
+          "has_dropset": false,
+          "n_working_sets": 1,
+          "note": null,
+          "reps_at_top": 8,
+          "reps_total": 8,
+          "sets_inferred": false,
+          "superset": null,
+          "volume_load": 240.0,
+          "weight_changed": false,
+          "weight_top": 30.0
+        }
+      ],
+      "exercises_with_notes": [],
+      "exercises_with_weight_change": [],
+      "n_drop_sets": 1,
+      "n_exercises": 6,
+      "n_working_sets": 7,
+      "notable_changes": [
+        {
+          "direction": "up",
+          "exercise_name": "Bench Press",
+          "latest": 1200.0,
+          "metric": "volume_load",
+          "pct_change": 9.1,
+          "prior": 1100.0
+        },
+        {
+          "direction": "up",
+          "exercise_name": "Bench Press",
+          "latest": 120.0,
+          "metric": "weight_top",
+          "pct_change": 9.1,
+          "prior": 110.0
+        },
+        {
+          "direction": "down",
+          "exercise_name": "Curl",
+          "latest": 240.0,
+          "metric": "volume_load",
+          "pct_change": -33.3,
+          "prior": 360.0
+        }
+      ],
+      "total_reps": 78
+    },
+    "progression_signals": [
+      {
+        "detail": "top weight 110.0 -> 120.0",
+        "exercise_name": "Bench Press",
+        "signal": "top_weight_increased"
+      },
+      {
+        "detail": "volume_load 1100.0 -> 1200.0 (+9%)",
+        "exercise_name": "Bench Press",
+        "signal": "volume_increased"
+      },
+      {
+        "detail": "volume_load flat over last 3 appearances",
+        "exercise_name": "Cable Row (Heavy)",
+        "signal": "stable"
+      },
+      {
+        "detail": "volume_load flat over last 3 appearances",
+        "exercise_name": "Lat Pulldown",
+        "signal": "stable"
+      },
+      {
+        "detail": "volume_load flat over last 3 appearances",
+        "exercise_name": "Leg Extension",
+        "signal": "stable"
+      },
+      {
+        "detail": "12 -> 14 reps at 0.0",
+        "exercise_name": "Hanging Leg Raise",
+        "signal": "reps_increased_at_same_weight"
+      },
+      {
+        "detail": "reps_total 12 -> 14 (+17%)",
+        "exercise_name": "Hanging Leg Raise",
+        "signal": "volume_increased"
+      },
+      {
+        "detail": "volume_load 360.0 -> 240.0 (-33%)",
+        "exercise_name": "Curl",
+        "signal": "volume_decreased"
+      },
+      {
+        "detail": "last time: 8 reps at top weight, prescribed 10-12",
+        "exercise_name": "Curl",
+        "signal": "rep_range_missed"
+      },
+      {
+        "detail": "volume_load down over last 3 appearances",
+        "exercise_name": "Curl",
+        "signal": "recently_declined"
+      },
+      {
+        "detail": "no completed history for this exercise",
+        "exercise_name": "New Movement",
+        "signal": "new_exercise"
+      }
+    ],
+    "upcoming_day": "W4U1",
+    "upcoming_workout": {
+      "date": "2025-03-21",
+      "day": "W4U1",
+      "exercises": [
+        {
+          "exercise_name": "Bench Press",
+          "note": null,
+          "rep_range": [
+            8,
+            10
+          ],
+          "reps": "8-10",
+          "rest_min": 2,
+          "rpe": "8-9",
+          "substitutes": [],
+          "superset": null,
+          "warmup_sets": 1,
+          "working_sets": 1
+        },
+        {
+          "exercise_name": "Cable Row (Heavy)",
+          "note": null,
+          "rep_range": [
+            8,
+            10
+          ],
+          "reps": "8-10",
+          "rest_min": 2,
+          "rpe": "8-9",
+          "substitutes": [],
+          "superset": "A1",
+          "warmup_sets": 1,
+          "working_sets": 1
+        },
+        {
+          "exercise_name": "Lat Pulldown",
+          "note": null,
+          "rep_range": [
+            10,
+            12
+          ],
+          "reps": "10-12",
+          "rest_min": 2,
+          "rpe": "8-9",
+          "substitutes": [],
+          "superset": "A2",
+          "warmup_sets": 1,
+          "working_sets": 1
+        },
+        {
+          "exercise_name": "Leg Extension",
+          "note": null,
+          "rep_range": [
+            10,
+            12
+          ],
+          "reps": "10-12",
+          "rest_min": 2,
+          "rpe": "8-9",
+          "substitutes": [],
+          "superset": null,
+          "warmup_sets": 1,
+          "working_sets": 2
+        },
+        {
+          "exercise_name": "Hanging Leg Raise",
+          "note": null,
+          "rep_range": [
+            10,
+            15
+          ],
+          "reps": "10-15",
+          "rest_min": 2,
+          "rpe": "8-9",
+          "substitutes": [],
+          "superset": null,
+          "warmup_sets": 1,
+          "working_sets": 1
+        },
+        {
+          "exercise_name": "Curl",
+          "note": null,
+          "rep_range": [
+            10,
+            12
+          ],
+          "reps": "10-12",
+          "rest_min": 2,
+          "rpe": "8-9",
+          "substitutes": [],
+          "superset": null,
+          "warmup_sets": 1,
+          "working_sets": 1
+        },
+        {
+          "exercise_name": "New Movement",
+          "note": null,
+          "rep_range": [
+            10,
+            12
+          ],
+          "reps": "10-12",
+          "rest_min": 2,
+          "rpe": "8-9",
+          "substitutes": [],
+          "superset": null,
+          "warmup_sets": 1,
+          "working_sets": 2
+        }
+      ],
+      "n_exercises": 7,
+      "notes": [],
+      "split": "upper",
+      "superset_pairs": [
+        [
+          "Cable Row (Heavy)",
+          "Lat Pulldown"
+        ]
+      ],
+      "week": 4
+    }
+  },
+  "ts": "2026-01-01T00:00:00",
+  "upcoming_day": "W4U1"
+}
