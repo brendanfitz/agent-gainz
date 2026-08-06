@@ -456,7 +456,7 @@ The agent should not:
 * Confirm required columns
 * Normalize exercise names
 * Validate workout dates and program days
-* Classify workouts as completed, upcoming, or partial
+* Classify workouts as completed, upcoming
 * Identify the latest completed workout
 * Identify the next upcoming workout
 * Add tests for bodyweight and inferred data
