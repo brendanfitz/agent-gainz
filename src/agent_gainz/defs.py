@@ -56,3 +56,19 @@ TREND_WINDOW = 3  # recent appearances considered for a trend
 MIN_HISTORY = 2  # appearances needed before a trend is claimed
 VOLUME_DELTA_MEANINGFUL = 0.05  # relative volume change worth mentioning
 UNUSUAL_LOAD_JUMP = 0.15  # relative top-weight change that looks suspicious
+
+# Persisted artifacts (data/ is gitignored).
+BRIEFINGS_DIR = Path("data/interim/briefings")
+FEEDBACK_PATH = Path("data/interim/feedback.jsonl")
+READINESS_LOG = Path("data/interim/readiness_log.jsonl")
+
+# Briefing shape limits, shared by the coach's postvalidate and the evals.
+MAX_QUESTIONS = 3
+MAX_OBSERVATIONS = 3
+
+# Recommendation areas that legitimately refer to the whole session rather
+# than one exercise.
+WORKOUT_AREAS = frozenset({
+    "workout", "session", "overall", "today's workout", "whole workout",
+    "warm-up", "warmup", "warm-ups", "readiness", "recovery",
+})

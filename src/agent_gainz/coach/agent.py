@@ -8,14 +8,13 @@ from pathlib import Path
 import pandas as pd
 from agents import Agent, Runner, trace
 
-from agent_gainz import transforms
+from agent_gainz import analytics, defs, records, transforms
 from agent_gainz.coach.models import PreWorkoutBriefing, ReadinessQuestions
 from agent_gainz.coach.tools import COACH_TOOLS, CoachContext
 
 DEFAULT_MODEL = "gpt-5-mini"
-READINESS_LOG = Path("data/interim/readiness_log.jsonl")
-MAX_QUESTIONS = 3
-MAX_OBSERVATIONS = 3
+MAX_QUESTIONS = defs.MAX_QUESTIONS
+MAX_OBSERVATIONS = defs.MAX_OBSERVATIONS
 
 INSTRUCTIONS = """\
 You are an evidence-driven personal trainer preparing the user for the workout
@@ -52,13 +51,17 @@ cleanliness of the evidence.
 """
 
 
+def resolve_model(model: str | None = None) -> str:
+    return model or os.environ.get("AGENT_GAINZ_MODEL") or DEFAULT_MODEL
+
+
 def build_coach(model: str | None = None) -> Agent[CoachContext]:
     """The single coach agent; stages clone it with different output types."""
     return Agent[CoachContext](
         name="agent-gainz coach",
         instructions=INSTRUCTIONS,
         tools=COACH_TOOLS,
-        model=model or os.environ.get("AGENT_GAINZ_MODEL", DEFAULT_MODEL),
+        model=resolve_model(model),
     )
 
 
@@ -88,8 +91,8 @@ def postvalidate(briefing: PreWorkoutBriefing) -> tuple[PreWorkoutBriefing, list
 
 def run_briefing(context: CoachContext, *, model: str | None = None,
                  interactive: bool = True,
-                 ask_user=input) -> tuple[PreWorkoutBriefing, list[str]]:
-    """Run the two-stage coach flow and return the validated briefing.
+                 ask_user=input) -> tuple[PreWorkoutBriefing, list[str], list[dict]]:
+    """Run the two-stage coach flow; returns (briefing, warnings, readiness Q&A).
 
     Stage 1 asks for readiness questions, answers are collected via `ask_user`
     and logged; stage 2 continues the same conversation into the final
@@ -126,7 +129,7 @@ def run_briefing(context: CoachContext, *, model: str | None = None,
     briefing, warnings = postvalidate(stage2.final_output)
     if interactive and not briefing.readiness_questions_asked:
         briefing.readiness_questions_asked = [q for q, _ in answers]
-    return briefing, warnings
+    return briefing, warnings, [dict(question=q, answer=a) for q, a in answers]
 
 
 def render_briefing(briefing: PreWorkoutBriefing) -> str:
@@ -156,14 +159,24 @@ def render_briefing(briefing: PreWorkoutBriefing) -> str:
 
 
 def run_briefing_cli(df_parsed: pd.DataFrame, *, model: str | None = None,
-                     interactive: bool = True) -> int:
-    """CLI entry: build the context from a parsed frame, run, print. Returns exit code."""
+                     interactive: bool = True, simulated: bool = True) -> int:
+    """CLI entry: run the coach, print the briefing, persist the run record."""
     upcoming = transforms.next_upcoming(df_parsed)
     latest = transforms.latest_completed(df_parsed, before=upcoming)
     context = CoachContext(df_parsed=df_parsed, upcoming_day=upcoming,
-                           latest_day=latest, readiness_log_path=READINESS_LOG)
-    briefing, warnings = run_briefing(context, model=model, interactive=interactive)
+                           latest_day=latest, readiness_log_path=defs.READINESS_LOG)
+    briefing, warnings, readiness = run_briefing(context, model=model,
+                                                 interactive=interactive)
     print(render_briefing(briefing))
     for w in warnings:
         print(f"[warning] {w}")
+
+    record = records.build_run_record(
+        briefing=briefing,
+        tool_payloads=analytics.build_briefing_inputs(df_parsed),
+        model=resolve_model(model), upcoming_day=upcoming, latest_day=latest,
+        readiness=readiness, warnings=warnings,
+        interactive=interactive, simulated=simulated)
+    path = records.save_run_record(record)
+    print(f"\nRun record saved to {path}")
     return 0

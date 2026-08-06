@@ -39,7 +39,29 @@ def cmd_brief(args: argparse.Namespace) -> int:
         print("Every session has logged data - nothing upcoming to brief on. "
               "(Drop --no-simulate to simulate one.)")
         return 1
-    return run_briefing_cli(df, model=args.model, interactive=not args.no_questions)
+    return run_briefing_cli(df, model=args.model,
+                            interactive=not args.no_questions,
+                            simulated=not args.no_simulate)
+
+
+def cmd_review(args: argparse.Namespace) -> int:
+    from agent_gainz import records, review
+    path = (Path(args.briefing) if args.briefing
+            else records.latest_run_record(day=args.upcoming_day))
+    if path is None:
+        print("No saved briefing found - run `agent-gainz brief` first.")
+        return 1
+    df_actual = load.load_logbook(Path(args.data))  # real states, not simulated
+    return review.run_review_cli(path, df_actual)
+
+
+def cmd_eval(args: argparse.Namespace) -> int:
+    from agent_gainz import evals, records
+    path = Path(args.path) if args.path else records.latest_run_record()
+    if path is None:
+        print("No saved briefing found - run `agent-gainz brief` first.")
+        return 1
+    return evals.run_eval_cli(path)
 
 
 def main() -> None:
@@ -68,6 +90,22 @@ def main() -> None:
     p_brief.add_argument("--no-questions", action="store_true",
                          help="skip the interactive readiness questions")
     p_brief.set_defaults(func=cmd_brief)
+
+    p_review = sub.add_parser(
+        "review", help="post-workout: compare a briefing with what happened, record feedback")
+    p_review.add_argument("--data", default=str(defs.DEFAULT_DATA_PATH),
+                          help="path to the Excel workout log")
+    p_review.add_argument("--briefing", default=None, metavar="PATH",
+                          help="run-record file to review (default: most recent)")
+    p_review.add_argument("--upcoming-day", default=None, metavar="DAY",
+                          help="review the most recent record for this program day")
+    p_review.set_defaults(func=cmd_review)
+
+    p_eval = sub.add_parser("eval",
+                            help="deterministic quality checks on a saved briefing")
+    p_eval.add_argument("path", nargs="?", default=None,
+                        help="run-record file to evaluate (default: most recent)")
+    p_eval.set_defaults(func=cmd_eval)
 
     args = parser.parse_args()
     sys.exit(args.func(args))
