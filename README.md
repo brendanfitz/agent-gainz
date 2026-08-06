@@ -4,6 +4,25 @@ An agentic, data-driven personal trainer that reviews recent workout performance
 
 The system is designed to run before training, such as during a morning check-in. It combines historical workout data, today’s prescribed program, targeted readiness questions, and deterministic training analytics to recommend where to push, maintain, or pull back.
 
+## Quickstart
+
+```bash
+uv sync                          # install (Python 3.13, uv-managed)
+cp .env.example .env             # add your OPENAI_API_KEY
+                                 # optional: AGENT_GAINZ_MODEL (default gpt-5-mini)
+# place the workout log at data/Essentials 4x Logbook.xlsx (data/ is gitignored)
+
+uv run pytest                    # no API key needed
+uv run agent-gainz report        # deterministic pre-workout report (no LLM)
+uv run agent-gainz brief         # agent briefing with interactive readiness questions
+uv run agent-gainz review        # post-workout: compare recommendations, rate usefulness
+uv run agent-gainz eval          # deterministic quality checks on the last briefing
+```
+
+**“Today” is simulated.** The workbook is fully logged, so `report` and `brief` default to blanking the last program day (`W12L2`) and treating it as the workout ahead. Pick a different day with `--upcoming-day W6L1`, or pass `--no-simulate` to use the genuine workout states. Session dates are synthetic (a Mon/Tue/Thu/Fri sequence from 2025-03-17) — ordering only, not real calendar dates.
+
+Every `brief` run saves a full run record (briefing, tool payloads, readiness answers) to `data/interim/briefings/`; `review` and `eval` read the most recent one by default.
+
 ## 1. Project Goal
 
 Build an AI personal trainer that prepares the user for the next workout.
@@ -306,11 +325,7 @@ The MVP should ask no more than three questions.
 
 The MVP will use the OpenAI Agents SDK.
 
-It will begin with one coach agent.
-<!-- 
-Claude, I have one coach agent written here, but I am open to multiple agents
-Decide which is cleaner
--->
+It uses one coach agent: the readiness-question and briefing stages clone the same agent with different structured output types, so instructions, tools, and guardrails are defined once.
 
 The coach agent will:
 
@@ -450,7 +465,7 @@ The agent should not:
 
 ## 16. MVP Development Phases
 
-### Phase 1: Data Validation
+### Phase 1: Data Validation (complete)
 
 * Load `df_parsed`
 * Confirm required columns
@@ -461,7 +476,7 @@ The agent should not:
 * Identify the next upcoming workout
 * Add tests for bodyweight and inferred data
 
-### Phase 2: Deterministic Analytics
+### Phase 2: Deterministic Analytics (complete)
 
 * Build the previous workout summary
 * Build the upcoming workout preview
@@ -470,7 +485,7 @@ The agent should not:
 * Generate data-quality signals
 * Produce a pre-workout report without an LLM
 
-### Phase 3: OpenAI Agent
+### Phase 3: OpenAI Agent (complete)
 
 * Add analytical tools
 * Add the coach agent
@@ -480,17 +495,15 @@ The agent should not:
 * Enable tracing
 * Generate the first agent-produced pre-workout briefing
 
-### Phase 4: Feedback and Evaluation
+### Phase 4: Feedback and Evaluation (complete)
 
-* Record the agent’s recommendations
-* Record whether each recommendation was followed
-* Compare the recommendation with the completed workout
-* Collect a usefulness rating
-* Create representative workout test cases
-* Check factual accuracy
-* Check that recommendations cite evidence
-* Check that numerical claims match tool output
-* Check for unsupported medical or injury claims
+* Record the agent’s recommendations — every `brief` run saves a full run record to `data/interim/briefings/`
+* Record whether each recommendation was followed — `agent-gainz review` collects followed y/n/partial per recommendation
+* Compare the recommendation with the completed workout — `review` auto-classifies each outcome (progressed/repeated/regressed) and its alignment with the recommendation
+* Collect a usefulness rating — 1–5 per review, appended to `data/interim/feedback.jsonl`
+* Create representative workout test cases — program start (W1U1), mid-program (W6L1), and full-history (W12L2) scenarios in `tests/test_scenarios.py`
+* Check factual accuracy, evidence citations, and numerical claims — `agent-gainz eval` verifies every number in the briefing against the saved tool payloads
+* Check for unsupported medical or injury claims — tiered keyword screen (hard errors vs review warnings, pain-with-caution phrasing allowed)
 
 ### Phase 5: Data Platform
 
@@ -524,13 +537,11 @@ Potential later additions include:
 
 ## 18. Immediate Next Steps
 
-1. Create the `agent-gainz` repository.
-2. Add the Excel dataframe loader.
-3. Define completed, upcoming, and partial workout logic.
-4. Build the previous workout summary.
-5. Build the upcoming workout preview.
-6. Compare today’s exercises with historical performance.
-7. Produce a deterministic pre-workout report.
-8. Define the structured agent output.
-9. Wrap the analytics functions as OpenAI Agents SDK tools.
-10. Generate the first pre-workout briefing.
+Phases 1–4 are complete. Next up is Phase 5, the data platform:
+
+1. Create the data-platform repository.
+2. Load the Excel workout log into PostgreSQL.
+3. Build dbt staging and mart models with tests.
+4. Add Airflow orchestration.
+5. Replace the dataframe adapter with a PostgreSQL adapter in `agent-gainz`.
+6. Keep accumulating `data/interim/feedback.jsonl` across real workouts to enable recommendation-outcome analysis (section 17).
