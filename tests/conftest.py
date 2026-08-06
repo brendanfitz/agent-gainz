@@ -24,7 +24,7 @@ def mini_df():
     rows = []
     bench = ["100R10", "110R10", "120R10"]
     hlr = ["0R10", "0R12", "0R14"]
-    curl = ["35R12", "30R12", "30R10"]
+    curl = ["35R12", "30R12", "30R8"]  # last session drops below the 10-12 prescription
     for i, day in enumerate(["W1U1", "W2U1", "W3U1"]):
         rows += _session(day, [
             dict(exercise="Bench Press", working_sets=1, reps="8-10", load=bench[i]),
