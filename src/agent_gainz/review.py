@@ -26,15 +26,22 @@ def normalize_name(s: str) -> str:
 
 def resolve_area(area: str, exercises: list[dict]) -> str | None:
     """Map a recommendation area onto a performed exercise_name, or None for
-    workout-level / unrecognized areas."""
-    target = normalize_name(area)
+    workout-level / unrecognized areas.
+
+    Both sides are also tried with a trailing parenthetical stripped: the log
+    has variant names like 'Flat DB Press (Heavy)', and models like to append
+    descriptions like 'Leg Extension (quads)'.
+    """
+    targets = [normalize_name(area), normalize_name(BASE_NAME_RE.sub("", area))]
     by_name = {normalize_name(e["exercise_name"]): e["exercise_name"]
                for e in exercises}
-    if target in by_name:
-        return by_name[target]
     by_base = {normalize_name(BASE_NAME_RE.sub("", e["exercise_name"])): e["exercise_name"]
                for e in exercises}
-    return by_base.get(target)
+    for lookup in (by_name, by_base):
+        for target in targets:
+            if target in lookup:
+                return lookup[target]
+    return None
 
 
 def classify_outcome(actual: dict | None, prior: dict | None, *,

@@ -32,6 +32,9 @@ Recommendation rules (stay inside the written program):
   of the range, follow the program as written), pull_back (start at the bottom
   of the range, avoid load increases, use a listed substitute), or
   ask_for_context (clarify soreness, recovery, an odd data point, or a note).
+- Set each recommendation's area to the exact exercise_name from the preview
+  (or a session-level word like "workout" or "recovery"). Do not append
+  muscle groups or descriptions to the area.
 - Never rewrite the program, add unplanned volume, or recommend large load
   increases. Only suggest substitutes that the prescription already lists.
 - Never diagnose injuries or recommend training through acute pain — if pain

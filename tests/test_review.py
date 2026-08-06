@@ -59,6 +59,9 @@ def test_resolve_area():
     assert review.resolve_area("Bench Press.", exercises) == "Bench Press"
     assert review.resolve_area("Workout", exercises) is None
     assert review.resolve_area("Deadlift", exercises) is None
+    # Model-appended descriptions resolve to the real exercise.
+    assert review.resolve_area("Bench Press (chest)", exercises) == "Bench Press"
+    assert review.resolve_area("Cable Row (lats/mid-back)", exercises) == "Cable Row (Heavy)"
 
 
 def test_compare_recommendations_all_outcomes(record, mini_df_completed):

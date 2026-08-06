@@ -112,6 +112,14 @@ def test_invalid_area_caught(record):
     assert len(fails) == 1
 
 
+def test_area_with_appended_description_allowed(record):
+    # Live models decorate areas with muscle groups; the trailing parenthetical
+    # is dropped before matching.
+    r = copy.deepcopy(record)
+    r["briefing"]["recommendations"][0]["area"] = "Bench Press (chest/triceps)"
+    assert [f for f in failed(evals.run_checks(r)) if f["check"] == "areas_valid"] == []
+
+
 def test_base_name_and_workout_areas_allowed(record):
     r = copy.deepcopy(record)
     r["briefing"]["recommendations"][1]["area"] = "Cable Row"  # base of "(Heavy)" variant
@@ -146,3 +154,18 @@ def test_pain_without_caution_warns(record):
     warns = [f for f in failed(evals.run_checks(r), "warning")
              if f["check"] == "medical_language"]
     assert len(warns) == 1
+
+
+def test_readiness_question_may_ask_about_pain(record):
+    r = mutate(record, readiness_questions_asked=["Any knee pain today?",
+                                                  "How sore are your quads?"])
+    results = evals.run_checks(r)
+    assert [f for f in failed(results, "warning")
+            if f["check"] == "medical_language"] == []
+
+
+def test_readiness_question_hard_patterns_still_error(record):
+    r = mutate(record, readiness_questions_asked=[
+        "Can you push through the pain on lunges?"])
+    fails = [f for f in failed(evals.run_checks(r)) if f["check"] == "medical_language"]
+    assert len(fails) == 1

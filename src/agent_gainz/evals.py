@@ -186,28 +186,34 @@ def check_areas_valid(briefing: dict, payloads: dict) -> list[dict]:
         allowed.add(normalize_text(BASE_NAME_RE.sub("", e["exercise_name"])))
     results = []
     for rec in briefing.get("recommendations", []):
-        if normalize_text(rec.get("area", "")) not in allowed:
+        area = rec.get("area", "")
+        # Models like to append descriptions ("Leg Extension (quads)") — a
+        # trailing parenthetical is dropped before matching.
+        candidates = {normalize_text(area), normalize_text(BASE_NAME_RE.sub("", area))}
+        if not candidates & allowed:
             results.append(_result("areas_valid", False,
-                                   f"area {rec.get('area')!r} is not a prescribed "
+                                   f"area {area!r} is not a prescribed "
                                    "exercise or workout-level area"))
     return results or [_result("areas_valid", True)]
 
 
-def _briefing_texts(briefing: dict) -> list[str]:
+def _briefing_texts(briefing: dict) -> list[tuple[str, bool]]:
+    """(text, is_question) pairs — questions get a lighter screen."""
     texts = [briefing.get("previous_workout_summary", ""),
              briefing.get("todays_workout", ""),
              briefing.get("tip") or ""]
     texts += briefing.get("key_observations", [])
     texts += briefing.get("limitations", [])
-    texts += briefing.get("readiness_questions_asked", [])
     for rec in briefing.get("recommendations", []):
         texts += [rec.get("action", ""), rec.get("evidence", "")]
-    return [t for t in texts if t]
+    pairs = [(t, False) for t in texts if t]
+    pairs += [(q, True) for q in briefing.get("readiness_questions_asked", []) if q]
+    return pairs
 
 
 def check_medical_language(briefing: dict) -> list[dict]:
     results = []
-    for text in _briefing_texts(briefing):
+    for text, is_question in _briefing_texts(briefing):
         for sentence in filter(None, map(str.strip, SENTENCE_SPLIT_RE.split(text))):
             for pattern in MEDICAL_HARD:
                 if pattern.search(sentence):
@@ -216,6 +222,10 @@ def check_medical_language(briefing: dict) -> list[dict]:
                         f"forbidden medical language: {sentence!r}"))
                     break
             else:
+                if is_question:
+                    # Asking about pain/soreness is the agent's job; only the
+                    # hard patterns apply to readiness questions.
+                    continue
                 if any(p.search(sentence) for p in MEDICAL_SOFT):
                     results.append(_result(
                         "medical_language", False,
